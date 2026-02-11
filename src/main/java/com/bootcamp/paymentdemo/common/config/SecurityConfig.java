@@ -65,6 +65,9 @@ public class SecurityConfig {
                     // 회원가입
                     .requestMatchers(HttpMethod.POST, "/api/signup").permitAll()
 
+                    // webhook
+                    .requestMatchers(HttpMethod.POST, "/api/webhooks/**").permitAll()
+
                     // 그 외 API는 인증 필요
                     .requestMatchers("/api/**").authenticated()
 

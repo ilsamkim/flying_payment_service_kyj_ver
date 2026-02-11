@@ -108,4 +108,16 @@ public class OrderService {
         ).toList();
     }
 
+    @Transactional(readOnly = true)
+    public Order getOrderByOrderNo(String orderNo) {
+        return orderRepository.findByOrderNo(orderNo)
+                .orElseThrow(()-> new ServiceErrorException(ErrorEnum.ERR_NOT_FOUND_ORDER));
+    }
+
+    @Transactional
+    public void completeOrder(String orderNo) {
+        Order order = getOrderByOrderNo(orderNo);
+        log.info("주문 완료 처리됨: {}", orderNo);
+    }
+
 }

@@ -45,6 +45,8 @@ public class Constants {
     public static final String MSG_DATA_INSERT_FAIL = "데이터 등록에 실패하였습니다";
     public static final String MSG_SERVER_ERROR_OCCUR = "서버 오류가 발생하였습니다, 잠시 후 다시 시도 바랍니다";
     // endregion
+
+    public static final String MSG_WEBHOOK_NOT_FOUND_PAYMENT = "포트원 결제 정보 조회 실패";
 }
 
 

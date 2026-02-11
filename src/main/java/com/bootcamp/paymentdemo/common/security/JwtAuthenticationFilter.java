@@ -64,6 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             , patternParser.parse("/api/signup") // 회원 가입
             , patternParser.parse("/api/auth/login") // 로그인
             , patternParser.parse("/api/auth/refresh") // 토큰 재발급
+            , patternParser.parse("/api/webhooks/**") // 웹훅
     );
 
     @Override
