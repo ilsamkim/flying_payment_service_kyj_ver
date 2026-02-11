@@ -95,7 +95,7 @@ public class Order extends Base {
 
     public void updateStatus(OrderStatus status) {
         this.status = status;
-        if(status == OrderStatus.REFUNDED) {
+        if(status == OrderStatus.CANCELLED) {
             this.deleted = true;
             this.deletedAt = LocalDateTime.now();
         }

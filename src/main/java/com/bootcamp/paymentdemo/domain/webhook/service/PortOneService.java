@@ -44,4 +44,25 @@ public class PortOneService {
             throw new ServiceErrorException(ErrorEnum.ERR_WEBHOOK_NOT_FOUND_PAYMENT);
         }
     }
+
+    public void cancelPayment(String paymentId, String reason) {
+        HttpHeaders headers = new HttpHeaders();
+        headers.set("Authorization", "PortOne " + apiSecret);
+        headers.set("Accept", "application/json");
+
+        Map<String, String> body = Map.of("reason", reason);
+        HttpEntity<Map<String, String>> entity = new HttpEntity<>(body, headers);
+
+        String url = String.format("%s/payments/%s/cancel", baseUrl, paymentId);
+
+        try {
+            log.info("포트원 결제 취소 API 호출: paymentId={}, reason={}", paymentId, reason);
+            // POST 요청으로 취소 명령 전송
+            restTemplate.exchange(url, HttpMethod.POST, entity, Map.class);
+            log.info("포트원 결제 취소 API 호출 성공: {}", paymentId);
+        } catch (Exception e) {
+            log.error("포트원 결제 취소 API 호출 실패: {}", e.getMessage());
+            throw new ServiceErrorException(ErrorEnum.ERR_FAIL_REFUND);
+        }
+    }
 }

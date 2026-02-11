@@ -8,5 +8,5 @@ import lombok.RequiredArgsConstructor;
 public enum OrderStatus {
     PENDING
     , COMPLETE
-    , REFUNDED
+    , CANCELLED
 }

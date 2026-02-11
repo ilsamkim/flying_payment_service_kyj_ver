@@ -74,7 +74,7 @@ public class Payment extends Base {
 
     public void updateStatus(PaymentStatus status) {
         this.status = status;
-        if (status == PaymentStatus.REFUNDED) {
+        if (status == PaymentStatus.CANCELLED) {
             this.refundAt = LocalDateTime.now();
         }
     }
