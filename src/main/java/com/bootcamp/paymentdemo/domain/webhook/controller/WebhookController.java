@@ -18,14 +18,16 @@ public class WebhookController {
     @PostMapping("/portone")
     public ResponseEntity<Void> handlePortOneWebhook(
             @RequestHeader(value = "webhook-id", required = false) String webhookId,
+            @RequestHeader(value = "webhook-signature", required = false) String signature,
             @RequestBody WebhookRequest request
     ) {
-        log.info("V2 웹훅 수신 확인 - paymentId: {}, status: {}", request.getPaymentId(), request.getStatus());
+        log.info("V2 웹훅 수신 확인 - paymentId: {}, status: {}, signature: {}",
+                request.getPaymentId(), request.getStatus(), signature);
 
         // webhookId가 없는 경우 paymentId를 대체 키로 사용
         String effectiveId = (webhookId != null) ? webhookId : "test-" + request.getPaymentId();
 
-        webhookService.process(effectiveId, request);
+        webhookService.process(effectiveId, signature, request);
         return ResponseEntity.ok().build();
     }
 

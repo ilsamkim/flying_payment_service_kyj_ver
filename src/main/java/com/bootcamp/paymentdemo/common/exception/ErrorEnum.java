@@ -41,7 +41,8 @@ public enum ErrorEnum {
     ERR_FAIL_REFUND(HttpStatus.BAD_REQUEST, MSG_FAIL_REFUND),
     // endregion
 
-    ERR_WEBHOOK_NOT_FOUND_PAYMENT(HttpStatus.NOT_FOUND, MSG_WEBHOOK_NOT_FOUND_PAYMENT);
+    ERR_WEBHOOK_NOT_FOUND_PAYMENT(HttpStatus.NOT_FOUND, MSG_WEBHOOK_NOT_FOUND_PAYMENT),
+    ERR_WEBHOOK_INVALID_SIGNATURE(HttpStatus.BAD_REQUEST, MSG_WEBHOOK_INVALID_SIGNATURE);
 
     private final HttpStatus status;
     private final String message;

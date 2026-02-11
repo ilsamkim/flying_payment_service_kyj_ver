@@ -12,7 +12,9 @@ import com.bootcamp.paymentdemo.domain.webhook.entity.Webhook;
 import com.bootcamp.paymentdemo.domain.webhook.entity.WebhookStatus;
 import com.bootcamp.paymentdemo.domain.webhook.repository.WebhookRepository;
 import lombok.RequiredArgsConstructor;
+
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -27,8 +29,19 @@ public class WebhookService {
     private final PaymentRepository paymentRepository;
     private final RefundService refundService;
 
+    @Value("${portone.api.webhook-secret}")
+    private String webhookSecret;
+
     @Transactional
-    public void process(String recWebhookId, WebhookRequest request) {
+    public void process(String recWebhookId, String signature, WebhookRequest request) {
+        // 시그니처 체크
+        if (signature == null || !signature.equals(webhookSecret)) {
+            log.error("웹훅 시그니처가 일치하지 않습니다 ID: {}", recWebhookId);
+            throw new ServiceErrorException(ErrorEnum.ERR_WEBHOOK_INVALID_SIGNATURE);
+        } else {
+            log.info("웹훅 보안 검증 성공");
+        }
+
         // 멱등성 체크
         if (webhookRepository.existsByRecWebhookId(recWebhookId)) {
             log.info("중복된 웹훅 무시: {}", recWebhookId);
